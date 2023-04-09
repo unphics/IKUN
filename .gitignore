@@ -1,0 +1,14 @@
+# 忽略所有的.bat文件
+# *.bat
+
+# 忽略当前目录的.bat文件
+# /*.bat
+
+# 忽略当前目录build文件夹下的所有内容
+# /build
+
+/Client/IKUN/.vs
+/Client/IKUN/Binaries
+/Client/IKUN/Intermediate
+/Client/IKUN/Saved
+/Client/IKUN/Saved/.sln
