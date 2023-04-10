@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 using UnrealBuildTool;
+using System.IO;
+using System;
 
 public class Protobuf : ModuleRules
 {
@@ -12,18 +14,18 @@ public class Protobuf : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+        string pathVcpkg = Environment.GetEnvironmentVariable("VCPKG_ROOT");
+        string pathProtobuf = Path.Combine(pathVcpkg, "packages", "protobuf_x64-windows");
+        string pathPBInclude = Path.Combine(pathProtobuf, "include");
 
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
+        PublicIncludePaths.AddRange(new string[] { pathPBInclude });
+        if(Target.Platform == UnrealTargetPlatform.Win64) {
+            PublicAdditionalLibraries.Add(Path.Combine(pathProtobuf, "lib", "libprotobuf.lib"));
+        }
 
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+        ShadowVariableWarningLevel = WarningLevel.Warning;
+        bEnableUndefinedIdentifierWarnings = false;
+        bEnableExceptions = true;
 
-		// bEnableShadowVariableWarnings = false;
-		// bEnableUndefinedIdentifierWarnings = false;
-		bEnableExceptions = true;
-
-		//Definitions.Add("_CRT_SECURE_NO_WARNINGS");
 	}
 }

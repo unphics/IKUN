@@ -1,0 +1,8 @@
+syntax = "proto3";
+package csprotos;
+//登陆
+message LoginReq
+{
+    optional uint32 AppID = 10;
+    optional string UserName = 11;
+}
