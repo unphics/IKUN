@@ -13,5 +13,7 @@ UCLASS()
 class IKUN_API AIKUNGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+
+	virtual void StartPlay();
 };

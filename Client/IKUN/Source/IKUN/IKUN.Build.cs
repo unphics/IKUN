@@ -7,11 +7,11 @@ public class IKUN : ModuleRules
 	public IKUN(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-        ShadowVariableWarningLevel = WarningLevel.Warning;
+        //ShadowVariableWarningLevel = WarningLevel.Warning;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", /*"Protobuf", */"Protos" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore"/*, "Protobuf", "Protos" */});
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+		PrivateDependencyModuleNames.AddRange(new string[] { "IKUNProtos" });
 
         //bEnableUndefinedIdentifierWarnings = false;
         //bEnableExceptions = true;
