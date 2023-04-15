@@ -9,6 +9,7 @@ public class IKUNTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.AddRange( new string[] { "IKUN" } );
-	}
+		ExtraModuleNames.AddRange( new string[] { "IKUN" } ); 
+        //ExtraModuleNames.AddRange(new string[] { "IKUNProtos" });
+    }
 }

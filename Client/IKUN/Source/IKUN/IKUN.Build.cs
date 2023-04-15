@@ -9,9 +9,9 @@ public class IKUN : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         //ShadowVariableWarningLevel = WarningLevel.Warning;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore"/*, "Protobuf", "Protos" */});
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" /*,"IKUNProtobuf"*/, "Protobuf", "IKUNProtos" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "IKUNProtos" });
+		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
         //bEnableUndefinedIdentifierWarnings = false;
         //bEnableExceptions = true;
