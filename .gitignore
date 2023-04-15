@@ -6,7 +6,8 @@
 
 # 忽略当前目录build文件夹下的所有内容
 # /build
-
+**/Binaries/
+**/Intermediate/
 /Client/IKUN/.vs
 /Client/IKUN/Binaries
 /Client/IKUN/Intermediate
