@@ -1,7 +1,0 @@
-{
-	"SourceFiles": [
-		"D:\\UnrealProject\\IKUN\\Client\\IKUN\\Plugins\\IKUNProtobuf\\Source\\IKUNProtobuf\\IKUNProtobuf.Build.cs",
-		"D:\\UnrealProject\\IKUN\\Client\\IKUN\\Plugins\\IKUNProtobuf\\Source\\ThirdParty\\IKUNProtobufLibrary\\IKUNProtobufLibrary.Build.cs"
-	],
-	"EngineVersion": "5.0.3"
-}
