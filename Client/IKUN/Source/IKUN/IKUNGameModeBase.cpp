@@ -6,7 +6,8 @@
 #include "PBMgr.h"
 
 void AIKUNGameModeBase::StartPlay() {
-	UE_LOG(LogTemp, Display, TEXT("================= protobuf test"));
+	Super::StartPlay();
+	UE_LOG(LogTemp, Display, TEXT("=========== GameModeBase::StartPlay() =========="));
 	Super::StartPlay();
 	//SearchRequest sr;
 	//sr.set_page_number(666);
@@ -16,5 +17,6 @@ void AIKUNGameModeBase::StartPlay() {
 	//UE_LOG(LogTemp, Display, TEXT("========== num: %d"), sr.page_number());
 
 	UPBMgr* mgr = NewObject<UPBMgr>();
+	SearchRequest* obj = mgr->PBNew<SearchRequest>(std::string("SearchRequest"));
 
 }
