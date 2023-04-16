@@ -60,33 +60,25 @@ namespace internal {
 // It uses bit 0 == 0 to indicate an arena pointer and bit 0 == 1 to indicate a
 // UFS+Arena-container pointer. Besides it uses bit 1 == 0 to indicate arena
 // allocation and bit 1 == 1 to indicate heap allocation.
-class PROTOBUF_EXPORT InternalMetadata {
+class InternalMetadata {
  public:
   constexpr InternalMetadata() : ptr_(0) {}
-  explicit InternalMetadata(Arena* arena, bool is_message_owned = false) {
-    SetArena(arena, is_message_owned);
-  }
-
-  void SetArena(Arena* arena, bool is_message_owned) {
-    ptr_ = is_message_owned
-               ? reinterpret_cast<intptr_t>(arena) | kMessageOwnedArenaTagMask
-               : reinterpret_cast<intptr_t>(arena);
+  explicit InternalMetadata(Arena* arena, bool is_message_owned = false)
+      : ptr_(is_message_owned
+                 ? reinterpret_cast<intptr_t>(arena) | kMessageOwnedArenaTagMask
+                 : reinterpret_cast<intptr_t>(arena)) {
     GOOGLE_DCHECK(!is_message_owned || arena != nullptr);
   }
 
-  // To keep the ABI identical between debug and non-debug builds,
-  // the destructor is always defined here even though it may delegate
-  // to a non-inline private method.
-  // (see https://github.com/protocolbuffers/protobuf/issues/9947)
-  ~InternalMetadata() {
 #if defined(NDEBUG) || defined(_MSC_VER)
+  ~InternalMetadata() {
     if (HasMessageOwnedArenaTag()) {
       delete reinterpret_cast<Arena*>(ptr_ - kMessageOwnedArenaTagMask);
     }
-#else
-    CheckedDestruct();
-#endif
   }
+#else
+  ~InternalMetadata();
+#endif
 
   template <typename T>
   void Delete() {
@@ -265,9 +257,6 @@ class PROTOBUF_EXPORT InternalMetadata {
   PROTOBUF_NOINLINE void DoSwap(T* other) {
     mutable_unknown_fields<T>()->Swap(other);
   }
-
-  // Private helper with debug checks for ~InternalMetadata()
-  void CheckedDestruct();
 };
 
 // String Template specializations.

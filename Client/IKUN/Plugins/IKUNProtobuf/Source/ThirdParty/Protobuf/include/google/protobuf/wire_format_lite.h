@@ -41,7 +41,6 @@
 #define GOOGLE_PROTOBUF_WIRE_FORMAT_LITE_H__
 
 
-#include <limits>
 #include <string>
 
 #include <google/protobuf/stubs/common.h>

@@ -4,7 +4,7 @@
 #include "Core.h"
 #include "Modules/ModuleManager.h"
 #include "Interfaces/IPluginManager.h"
-#include "IKUNProtobufLibrary/ExampleLibrary.h"
+//#include "IKUNProtobufLibrary/ExampleLibrary.h"
 
 #define LOCTEXT_NAMESPACE "FIKUNProtobufModule"
 
@@ -30,7 +30,7 @@ void FIKUNProtobufModule::StartupModule()
 	if (ExampleLibraryHandle)
 	{
 		// Call the test function in the third party library that opens a message box
-		ExampleLibraryFunction();
+		//ExampleLibraryFunction();
 	}
 	else
 	{

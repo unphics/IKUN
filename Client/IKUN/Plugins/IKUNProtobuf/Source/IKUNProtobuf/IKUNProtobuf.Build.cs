@@ -1,3 +1,4 @@
+
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 using System.ComponentModel;
@@ -7,9 +8,10 @@ using System;
 
 public class IKUNProtobuf : ModuleRules {
 	public IKUNProtobuf(ReadOnlyTargetRules Target) : base(Target) {
-        bUsePrecompiled = true;
-        PrecompileForTargets = PrecompileTargetsType.Any;
+        //bUsePrecompiled = true;
+        //PrecompileForTargets = PrecompileTargetsType.Any;
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+
         bEnableUndefinedIdentifierWarnings = false;
         PublicIncludePaths.AddRange(new string[] {});
         PrivateIncludePaths.AddRange(new string[] {});

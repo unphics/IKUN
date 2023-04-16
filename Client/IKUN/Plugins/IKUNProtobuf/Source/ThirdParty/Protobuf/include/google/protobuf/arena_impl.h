@@ -55,13 +55,6 @@ namespace google {
 namespace protobuf {
 namespace internal {
 
-// To prevent sharing cache lines between threads
-#ifdef __cpp_aligned_new
-enum { kCacheAlignment = 64 };
-#else
-enum { kCacheAlignment = alignof(max_align_t) };  // do the best we can
-#endif
-
 inline constexpr size_t AlignUpTo8(size_t n) {
   // Align n to next multiple of 8 (from Hacker's Delight, Chapter 3.)
   return (n + 7) & static_cast<size_t>(-8);
@@ -504,10 +497,10 @@ class PROTOBUF_EXPORT ThreadSafeArena {
   // have fallback function calls in tail position. This substantially improves
   // code for the happy path.
   PROTOBUF_NDEBUG_INLINE bool MaybeAllocateAligned(size_t n, void** out) {
-    SerialArena* arena;
+    SerialArena* a;
     if (PROTOBUF_PREDICT_TRUE(!alloc_policy_.should_record_allocs() &&
-                              GetSerialArenaFromThreadCache(&arena))) {
-      return arena->MaybeAllocateAligned(n, out);
+                              GetSerialArenaFromThreadCache(&a))) {
+      return a->MaybeAllocateAligned(n, out);
     }
     return false;
   }
@@ -571,7 +564,7 @@ class PROTOBUF_EXPORT ThreadSafeArena {
     // fast path optimizes the case where a single thread uses multiple arenas.
     ThreadCache* tc = &thread_cache();
     SerialArena* serial = hint_.load(std::memory_order_acquire);
-    if (PROTOBUF_PREDICT_TRUE(serial != nullptr && serial->owner() == tc)) {
+    if (PROTOBUF_PREDICT_TRUE(serial != NULL && serial->owner() == tc)) {
       *arena = serial;
       return true;
     }
@@ -609,7 +602,7 @@ class PROTOBUF_EXPORT ThreadSafeArena {
 #ifdef _MSC_VER
 #pragma warning(disable : 4324)
 #endif
-  struct alignas(kCacheAlignment) ThreadCache {
+  struct alignas(64) ThreadCache {
 #if defined(GOOGLE_PROTOBUF_NO_THREADLOCAL)
     // If we are using the ThreadLocalStorage class to store the ThreadCache,
     // then the ThreadCache's default constructor has to be responsible for
@@ -617,7 +610,7 @@ class PROTOBUF_EXPORT ThreadSafeArena {
     ThreadCache()
         : next_lifecycle_id(0),
           last_lifecycle_id_seen(-1),
-          last_serial_arena(nullptr) {}
+          last_serial_arena(NULL) {}
 #endif
 
     // Number of per-thread lifecycle IDs to reserve. Must be power of two.
@@ -640,7 +633,7 @@ class PROTOBUF_EXPORT ThreadSafeArena {
 #ifdef _MSC_VER
 #pragma warning(disable : 4324)
 #endif
-  struct alignas(kCacheAlignment) CacheAlignedLifecycleIdGenerator {
+  struct alignas(64) CacheAlignedLifecycleIdGenerator {
     std::atomic<LifecycleIdAtomic> id;
   };
   static CacheAlignedLifecycleIdGenerator lifecycle_id_generator_;

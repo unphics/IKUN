@@ -2,7 +2,7 @@
 #include "UObject/Object.h"
 #include "PBMgr.generated.h"
 UCLASS()
-class /*IKUNProtos_API*/ UPBMgr : public UObject {
+class IKUNPROTOS_API UPBMgr : public UObject{
 	GENERATED_BODY()
 public:
 	UPBMgr();

@@ -4,17 +4,17 @@ using System;
 using UnrealBuildTool;
 public class IKUNProtos : ModuleRules {
     public IKUNProtos(ReadOnlyTargetRules Target) : base(Target) {
-
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         //bUsePrecompiled = true;
         //PrecompileForTargets = PrecompileTargetsType.Any;
-        //Type = ModuleType.External;
+        //Type = ModuleType.Runtime;
 
         // core包含了处理模块相关的代码，不包含无法创建模块
-        PrivateDependencyModuleNames.AddRange(new string[] { "Core" , "CoreUObject" , "Engine", "Protobuf" /*"IKUNProtobuf"*/});
+        PublicDependencyModuleNames.AddRange(new string[] { "Core" , "CoreUObject" , "Engine", "Protobuf" /*"IKUNProtobuf"*/});
         // 默认的情况下一个模块的代码并没有公开给其他模块，要标记每一个类或者函数进行导出
         // 不想被其他模块包含的头文件可以放进Private文件夹
-        PublicIncludePaths.AddRange(new string[] { "IKUNProtos/Public" });
-        PrivateIncludePaths.AddRange(new string[] { "IKUNProtos/Private" });
+        PublicIncludePaths.AddRange(new string[] { ModuleDirectory, "Public" });
+        PrivateIncludePaths.AddRange(new string[] { ModuleDirectory, "Private" });
         bEnableUndefinedIdentifierWarnings = false; // 关闭由#ifdef、#ifndef中的未定义产生的警告
         PublicDefinitions.Add("_CRT_SECURE_NO_WARNINGS"); // 避免pb报一堆警告
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
