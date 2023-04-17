@@ -2,8 +2,16 @@
 
 
 #include "GameInstance/IKUNGameInstanceBase.h"
-#include "Test.pb.h"
 
+UIKUNGameInstanceBase::UIKUNGameInstanceBase() {
+	UE_LOG(LogTemp, Display, TEXT("========== GameIns Constructor =========="));
+	
+}
+
+
+
+/*
+#include "Test.pb.h"
 UIKUNGameInstanceBase::UIKUNGameInstanceBase() {
 	UE_LOG(LogTemp, Display, TEXT("========== GameIns Constructor =========="));
 	this->PBMgr = CreateDefaultSubobject<UPBMgr>(TEXT("PBMgr"));
@@ -12,3 +20,4 @@ UIKUNGameInstanceBase::UIKUNGameInstanceBase() {
 UPBMgr* UIKUNGameInstanceBase::GetPBMgr() {
 	return this->PBMgr;
 }
+*/

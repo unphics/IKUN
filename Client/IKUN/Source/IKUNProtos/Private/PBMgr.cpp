@@ -1,5 +1,4 @@
 #include "PBMgr.h"
-#include "Test.pb.h"
 
 UPBMgr::UPBMgr() {
 	UE_LOG(LogTemp, Display, TEXT("========== UPBMgr Constructor =========="));
@@ -9,8 +8,9 @@ UPBMgr::UPBMgr() {
 	FString str = sr.query().c_str();
 	UE_LOG(LogTemp, Display, TEXT("log pb: num = %d, str = %s"), sr.page_number(), *str);
 
-
+	this->p = &sr;
 }
+/*
 const google::protobuf::Descriptor* UPBMgr::FindMsgDescriptor(const std::string& TypeName) {
 	return google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName(TypeName);
 }
@@ -34,3 +34,4 @@ T* UPBMgr::PBNew(const std::string& TypeName) {
 	}
 	return nullptr;
 }
+*/

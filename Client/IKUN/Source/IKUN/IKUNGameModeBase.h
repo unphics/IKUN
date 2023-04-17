@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Test.pb.h"
 #include "IKUNGameModeBase.generated.h"
 
 /**
@@ -16,4 +17,5 @@ class IKUN_API AIKUNGameModeBase : public AGameModeBase
 public:
 
 	virtual void StartPlay();
+	SearchRequest* psr;
 };

@@ -2,7 +2,6 @@
 
 
 #include "IKUNGameModeBase.h"
-#include "Test.pb.h"
 #include "PBMgr.h"
 
 void AIKUNGameModeBase::StartPlay() {
@@ -13,10 +12,14 @@ void AIKUNGameModeBase::StartPlay() {
 	//sr.set_page_number(666);
 	//sr.set_query("qqqqqqqqq");
 	//FString str = sr.query().c_str();
-	//UE_LOG(LogTemp, Display, TEXT("======= num: %d, str: %s"), sr.clear_page_number(), str);
 	//UE_LOG(LogTemp, Display, TEXT("========== num: %d"), sr.page_number());
 
 	UPBMgr* mgr = NewObject<UPBMgr>();
-	SearchRequest* obj = mgr->PBNew<SearchRequest>(std::string("SearchRequest"));
-
+	this->psr = mgr->p;
+	(*psr).set_page_number(9898998);
+	(*psr).set_query("xiao hei zi");
+	FString str = psr->query().c_str();
+	std::cout << "str::::::" << psr->query() << std::endl;
+	UE_LOG(LogTemp, Display, TEXT("========== str: %d"), psr->page_number());
+	//SearchRequest* obj = mgr->PBNew<SearchRequest>(std::string("SearchRequest"));
 }

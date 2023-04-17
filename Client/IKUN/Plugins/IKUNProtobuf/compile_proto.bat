@@ -1,3 +1,4 @@
+:: echo off：关闭回显，批处理中的每一条命令都不会显示在显示器上。而echo off本身也是一条命令，如果不想让其显示，只需在前方加@符号即可。
 @echo off
 
 :: protobuf-vcpkg-thirdparty
@@ -13,7 +14,15 @@
 :: /s表示复制子目录，/y表示不提示是否覆盖已有文件
 :: xcopy ../../Source/IKUNProtos/Public/*.cc ../../Source/IKUNProtos/Private/ /S /E /Y
 
-:: protobuf-3.20.2-thirdparty
-.\Source\ThirdParty\Protobuf\lib\protoc.exe --proto_path=../../Source/IKUNProtos/Protos/ --cpp_out=../../Source/IKUNProtos/Public/ Test.proto
+:: protobuf-3.20.2-thirdparty-IKUNProtosModule
+:: .\Source\ThirdParty\Protobuf\lib\protoc.exe --proto_path=../../Source/IKUNProtos/Protos/ --cpp_out=../../Source/IKUNProtos/Public/ Test.proto
 
+:: SET的等号左右两边不能有空格
+:: SET CUR_PATH=%cd%
+:: for /r %%i in (../../Source/IKUNProtos/Proto/*.proto) do (
+::  	.\Source\ThirdParty\Protobuf\lib\protoc.exe --proto_path=..\..\Source\IKUNProtos\Protos\%%~ni.proto --cpp_out=..\..\Source\IKUN\Public\Protos\
+::)
+
+
+echo 完了
 pause

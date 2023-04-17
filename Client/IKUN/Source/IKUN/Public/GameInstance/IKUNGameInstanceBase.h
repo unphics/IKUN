@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "PBMgr.h"
+//#include "PBMgr.h"
 #include "IKUNGameInstanceBase.generated.h"
 
 /**
@@ -16,8 +16,14 @@ class IKUN_API UIKUNGameInstanceBase : public UGameInstance
 	GENERATED_BODY()
 public:
 	UIKUNGameInstanceBase();
+
+
+
+
+	/*
 	UFUNCTION()
 	UPBMgr* GetPBMgr();
 private:
 	UPBMgr* PBMgr;
+	*/
 };
