@@ -6,12 +6,16 @@
 #include "SQLiteResultSet.h"
 #include "HAL/FileManager.h"
 #include "Misc/Paths.h"
+#include "GameInstance/IKUNGameInstanceBase.h"
+
 void TestSqliteSupport();
 void AIKUNGameModeBase::StartPlay() {
 	Super::StartPlay();
 	UE_LOG(LogTemp, Display, TEXT("=========== GameModeBase::StartPlay() =========="));
-	
-	TestSqliteSupport();
+	// TestSqliteSupport();
+	if(Cast<UIKUNGameInstanceBase>(GetGameInstance())) {
+		Cast<UIKUNGameInstanceBase>(GetGameInstance())->SQLiteMgr->GetRowByID(FString("SQLiteDB/IKUNDataBase.db"));
+	}
 }
 void TestSqliteSupport() {
 	FSQLiteDatabase sqlite;

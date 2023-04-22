@@ -3,7 +3,8 @@
 
 #include "GameInstance/IKUNGameInstanceBase.h"
 
-UIKUNGameInstanceBase::UIKUNGameInstanceBase() {
-	UE_LOG(LogTemp, Display, TEXT("========== GameIns Constructor =========="));
-	
+void UIKUNGameInstanceBase::PostInitProperties() {
+	UE_LOG(LogTemp,Warning,TEXT("======= GameInstance Init ======="));
+	Super::PostInitProperties();
+	this->SQLiteMgr = NewObject<USQLiteMgr>();
 }
