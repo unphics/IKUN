@@ -9,6 +9,7 @@
 **/Binaries/
 **/Intermediate/
 /Client/IKUN/.vs
+/Client/IKUN/.idea
 /Client/IKUN/Binaries
 /Client/IKUN/Intermediate
 /Client/IKUN/Saved

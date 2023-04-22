@@ -12,7 +12,7 @@ public class Protobuf : ModuleRules {
 
         if (Target.Platform == UnrealTargetPlatform.Win64) {
             PublicSystemIncludePaths.Add(Path.Combine(ModuleDirectory, "include"));
-            PublicSystemIncludePaths.Add("include");
+            // PublicSystemIncludePaths.Add("include");
             PublicSystemIncludePaths.Add(Path.Combine(ModuleDirectory, "lib"));
             PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "lib", "libprotobuf.lib"));
         }
