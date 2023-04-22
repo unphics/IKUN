@@ -14,7 +14,7 @@ void AIKUNGameModeBase::StartPlay() {
 	UE_LOG(LogTemp, Display, TEXT("=========== GameModeBase::StartPlay() =========="));
 	// TestSqliteSupport();
 	if(Cast<UIKUNGameInstanceBase>(GetGameInstance())) {
-		Cast<UIKUNGameInstanceBase>(GetGameInstance())->SQLiteMgr->GetRowByID(FString("SQLiteDB/IKUNDataBase.db"));
+		// Cast<UIKUNGameInstanceBase>(GetGameInstance())->SQLiteMgr->GetRowByID(FString("SQLiteDB/IKUNDataBase.db"));
 	}
 }
 void TestSqliteSupport() {
