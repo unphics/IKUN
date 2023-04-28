@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "SQLite/SQLiteMgr.h"
 #include "IKUNGameInstanceBase.generated.h"
 
 /**
@@ -15,4 +16,5 @@ class IKUN_API UIKUNGameInstanceBase : public UGameInstance
 	GENERATED_BODY()
 public:
 	virtual void PostInitProperties() override;
+	// USQLiteMgr* SQLiteMgr;
 };

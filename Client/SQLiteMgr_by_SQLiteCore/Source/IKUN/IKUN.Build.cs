@@ -19,10 +19,9 @@ public class IKUN : ModuleRules
 	        // "IKUNProtobuf",
 	        "Protobuf",
 	        // "IKUNProtos",
-	        // "DatabaseSupport",
-	        // "SQLiteCore",
-	        // "SQLiteSupport",
-	        "SQLite",
+	        "DatabaseSupport",
+	        "SQLiteCore",
+	        "SQLiteSupport",
         });
         PublicSystemIncludePaths.Add(Path.Combine(ModuleDirectory, "Public", "Protos"));
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
