@@ -10,6 +10,9 @@ void USQLiteMgr::PostInitProperties() {
 
 void USQLiteMgr::BeginDestroy() {
 	Super::BeginDestroy();
+	for(auto ele : mapStmt) {
+		sqlite3_finalize(ele.Value);
+	}
 	sqlite3_close(this->pSQLite);
 }
 bool USQLiteMgr::InitSQliteMgr() {
@@ -34,8 +37,10 @@ bool USQLiteMgr::InitSQliteMgr() {
 	int id = 1;
 	sqlite3_bind_int(stmtBase, 1, id);
 	while(sqlite3_step(stmtBase) == SQLITE_ROW) {
-		//
-		arrTableName.push_back(std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmtBase,1)),strlen(reinterpret_cast<const char*>(sqlite3_column_text(stmtBase,1)))));
+		arrTableName.push_back(std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmtBase,1)),
+			strlen(reinterpret_cast<const char*>(sqlite3_column_text(stmtBase,1)))));
+		const char* cc = reinterpret_cast<const char*>(sqlite3_column_text(stmtBase,1));
+		
 		FString tableName = FString::Printf(TEXT("%s"), UTF8_TO_TCHAR(reinterpret_cast<const char*>(
 			sqlite3_column_text(stmtBase,1))));
 		UE_LOG(LogTemp, Warning, TEXT("Get Table Name: %s"), *tableName);
@@ -50,8 +55,8 @@ bool USQLiteMgr::InitSQliteMgr() {
 	for(int i = 0; i < arrTableName.size(); i++) {
 		std::string cmd = "SELECT * FROM " + arrTableName[i] + " WHERE ID = ?";
 		sqlite3_stmt* stmt;
-		FString tmp = cmd.c_str();
-		UE_LOG(LogTemp,Warning,TEXT("for cur sql cmd :%s"),*tmp);
+		// FString tmp = cmd.c_str();
+		// UE_LOG(LogTemp,Warning,TEXT("for cur sql cmd :%s"),*tmp);
 		if(sqlite3_prepare_v3(this->pSQLite, cmd.c_str(), -1, SQLITE_OPEN_READONLY, &stmt,
 			nullptr) != SQLITE_OK) {
 			result = false;
@@ -59,7 +64,7 @@ bool USQLiteMgr::InitSQliteMgr() {
 			UE_LOG(LogTemp, Error, TEXT("Failed to Open Data Base : %s"), *nametable);
 			continue;
 		}
-		mapStmt.Add(arrTableName[i].c_str(),stmt);
+		mapStmt.Add(&arrTableName[i],stmt);
 	}
 	return true;
 }

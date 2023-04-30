@@ -16,9 +16,9 @@ class IKUN_API USQLiteMgr : public UObject {
 public:
 	virtual void PostInitProperties() override; // 推荐使用，代替构造函数
 	virtual void BeginDestroy() override; // 推荐使用，代替析构函数
-	TMap<const char*, sqlite3_stmt*> mapStmt;
+	TMap<std::string*, sqlite3_stmt*> mapStmt;
+private:
 	sqlite3* pSQLite;
 	std::vector<std::string> arrTableName;
-private:
 	bool InitSQliteMgr();
 };
