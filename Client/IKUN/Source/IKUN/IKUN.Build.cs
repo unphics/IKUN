@@ -23,6 +23,8 @@ public class IKUN : ModuleRules
 	        // "SQLiteCore",
 	        // "SQLiteSupport",
 	        "SQLite",
+	        "GameplayTags", 
+	        "GameplayTasks",
         });
         PublicSystemIncludePaths.Add(Path.Combine(ModuleDirectory, "Public", "Protos"));
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
