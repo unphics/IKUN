@@ -16,6 +16,8 @@ public class IKUN : ModuleRules
 	        "CoreUObject",
 	        "Engine",
 	        "InputCore",
+	        "Slate",
+	        "SlateCore",
 	        // "IKUNProtobuf",
 	        "Protobuf",
 	        // "IKUNProtos",
