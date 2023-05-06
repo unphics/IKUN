@@ -37,6 +37,10 @@ public:
 	// 尝试激活指定物品插槽中的任何功能。如果未找到可激活能力或激活失败，将返回false
 	// 如果它认为它已激活，则返回true，但由于稍后的激活失败，它可能会返回误报。
 	// 如果bAllowRemoteActivation为true，它将远程激活本地/服务器功能，如果为false，它将仅尝试本地激活该功能
-	UFUNCTION(BlueprintCallable, Category = "Abilities")
-	bool ActiveAbilitiesWithItemSlot(UGASItem Item, bool AllowRemoteActiv)
+	// todo 缺少ItemSlot
+	// UFUNCTION(BlueprintCallable, Category = "Abilities")
+	// bool ActiveAbilitiesWithItemSlot(UGASItem Item, bool AllowRemoteActiv = true);
+	// 返回绑定到物品槽的活动能力列表，只有当该功能当前在运行时才会返回
+	// UFUNCTION(BlueprintCallable, Category = "Abilities")
+	// void GetActiveAbilitiesWithItemSlot
 };
