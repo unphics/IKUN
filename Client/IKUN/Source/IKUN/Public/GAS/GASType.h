@@ -1,6 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 // 此标头用于类和蓝图在整个游戏中使用的枚举和结构
 // 在单个标头中收集这些有助于避免递归标头包含的问题
 // 它也是放置数据表行结构之类的东西的好地方
@@ -61,3 +59,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	int32 ItemLevel;
 };
+// 库存项目更改时调用的代理
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventoryItemChanged, bool, bAdded, UGASItem*, Item);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInventoryChangedNative, bool, UGASItem*);
+// 库存槽的内容发生更改时调用了代理
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FonSlottedItemChanged, FGASItemSlot, ItemSlot, UGASItem*, Item);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FonSlottedItemChangedNative, FGASItemSlot, UGASItem*);
+// 当整个库存已加载，所有项目可能已被替换时，会调用代理
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInventoryLoaded);
+DECLARE_MULTICAST_DELEGATE(FOnInventoryLoadedNative);
+// 保存游戏加载/重置后调用的代理
+// DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSaveGameLoaded, UGASsavegame*, savegame)
+// DECLARE_MULTICAST_DELEGATE_OneParam(FOnSaveGameLoadedNative, UGASsavegame*)
