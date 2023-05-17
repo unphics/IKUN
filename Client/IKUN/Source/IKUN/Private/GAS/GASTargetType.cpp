@@ -4,21 +4,21 @@
 #include "GAS/GASTargetType.h"
 #include "GAS/GASCharacterBase.h"
 
-void UGASTargetType::GetTarget_Implementation(AGASCharacterBase* TargetingCharacter, AActor* TargetingActor,
+void UGASTargetType::GetTargets_Implementation(AGASCharacterBase* TargetingCharacter, AActor* TargetingActor,
 	FGameplayEventData EventData, TArray<FHitResult>& OutHitResults, TArray<AActor*>& OutActors) const {
 	return;
 }
 
-void UGASTargetType_UseOwner::GetTarget_Implementation(AGASCharacterBase* TargetingCharacter, AActor* TargetingActor,
+void UGASTargetType_UseOwner::GetTargets_Implementation(AGASCharacterBase* TargetingCharacter, AActor* TargetingActor,
 	FGameplayEventData EventData, TArray<FHitResult>& OutHitResults, TArray<AActor*>& OutActors) const {
-	Super::GetTarget_Implementation(TargetingCharacter, TargetingActor, EventData, OutHitResults, OutActors);
+	Super::GetTargets_Implementation(TargetingCharacter, TargetingActor, EventData, OutHitResults, OutActors);
 	OutActors.Add(TargetingCharacter);
 }
 
-void UGASTargetType_UseEventData::GetTarget_Implementation(AGASCharacterBase* TargetingCharacter,
+void UGASTargetType_UseEventData::GetTargets_Implementation(AGASCharacterBase* TargetingCharacter,
 	AActor* TargetingActor, FGameplayEventData EventData, TArray<FHitResult>& OutHitResults,
 	TArray<AActor*>& OutActors) const {
-	Super::GetTarget_Implementation(TargetingCharacter, TargetingActor, EventData, OutHitResults, OutActors);
+	Super::GetTargets_Implementation(TargetingCharacter, TargetingActor, EventData, OutHitResults, OutActors);
 	const FHitResult* FoundHitResult = EventData.ContextHandle.GetHitResult();
 	if(FoundHitResult) {
 		OutHitResults.Add(*FoundHitResult);
