@@ -6,12 +6,12 @@
 #include "SlateOptMacros.h"
 #include "Widgets/SUserWidget.h"
 #include "Widgets/Layout/SGridPanel.h"
-
+#include "Widgets/Input/SCheckBox.h"
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SPrefab::Construct(const FArguments& InArgs) {
 	int32 BoxId = 0;
-	CheckedBoxes.SetNum(2);
+	CheckBoxes.SetNum(2);
 	SPrefab::Construct(
 		SUserWidget::FArguments().HAlign(HAlign_Fill).VAlign(VAlign_Fill)
 		[
@@ -52,15 +52,81 @@ void SPrefab::Construct(const FArguments& InArgs) {
 				SNew(SHorizontalBox)
 				+ SHorizontalBox::Slot().FillWidth(1)
 				[
-					SAssignNew(CheckedBoxes[0], SCheckBox).IsChecked(true).OnCheckStateChanged(FOnCheckStateChanged::CreateLambda([this](ECheckBoxState newState) {
+					SAssignNew(CheckBoxes[0], SCheckBox).IsChecked(ECheckBoxState::Checked).OnCheckStateChanged(FOnCheckStateChanged::CreateLambda([this](ECheckBoxState newState) {
 						switch (newState) {
-							
+							case ECheckBoxState::Unchecked:
+								CheckBoxes[0]->SetIsChecked(ECheckBoxState::Checked);
+								break;
+							case ECheckBoxState::Checked:
+								for(int i = 0; i < CheckBoxes.Num(); ++i) {
+									if (i != 0 && CheckBoxes[i].IsValid()) {
+										CheckBoxes[i]->SetIsChecked(ECheckBoxState::Unchecked);
+									}
+								}
+								break;
+							case ECheckBoxState::Undetermined:
+								break;
+							default:
+								break;
 						}
 					}))
+					[
+						SNew(STextBlock).Text(FText::FromString(TEXT("选项一")))
+					]
+				]
+				+ SHorizontalBox::Slot().FillWidth(1)
+				[
+					SAssignNew(CheckBoxes[1], SCheckBox).OnCheckStateChanged(FOnCheckStateChanged::CreateLambda([this](ECheckBoxState newState) {
+						switch (newState) {
+							case ECheckBoxState::Unchecked:
+								CheckBoxes[1]->SetIsChecked(ECheckBoxState::Checked);
+								break;
+							case ECheckBoxState::Checked:
+								for(int i = 0; i < CheckBoxes.Num(); ++i) {
+									if (i != 0 && CheckBoxes[i].IsValid()) {
+										CheckBoxes[i]->SetIsChecked(ECheckBoxState::Unchecked);
+									}
+								}
+								break;
+							case ECheckBoxState::Undetermined:
+								break;
+							default:
+								break;
+						}
+					}))
+					[
+						SNew(STextBlock).Text(FText::FromString(TEXT("选项二")))
+					]
+				]
+			]
+			+ SGridPanel::Slot(1, 2).HAlign(HAlign_Fill).VAlign(VAlign_Center)
+			[
+				SNew(SComboBox<TSharedPtr<FString>>).OnGenerateWidget_Lambda/*这个委托返回的是下拉菜单每一个用的啥控件*/([](TSharedPtr<FString> Item) {
+					return SNew(STextBlock).Text(FText::FromString(*Item));
+				})
+				.OnSelectionChanged_Lambda/*选择下拉菜单后会发生的事情*/([this](TSharedPtr<FString> Item, ESelectInfo::Type type) {
+					if (ComboText.IsValid()) {
+						ComboText->SetText(*Item);
+					}
+				})
+				.OptionsSource(new TArray<TSharedPtr<FString>>({
+					MakeShareable(new FString(TEXT("0"))),
+					MakeShareable(new FString(TEXT("1"))),
+					MakeShareable(new FString(TEXT("2"))),
+				}))
+				[
+					SAssignNew(ComboText, STextBlock)
+				]
+			]
+			+ SGridPanel::Slot(1, 3).HAlign(HAlign_Center).VAlign(VAlign_Center)
+			[
+				SNew(SButton)
+				[
+					SNew(STextBlock).Text(FText::FromString(TEXT("确定")))
 				]
 			]
 		]
-	)
+	);
 }
 TSharedRef<SPrefab> SPrefab::New() {
 	return MakeShareable(new SPrefab());

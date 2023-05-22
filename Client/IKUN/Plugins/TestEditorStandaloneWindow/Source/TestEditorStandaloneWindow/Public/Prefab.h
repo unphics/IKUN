@@ -18,6 +18,6 @@ public:
 	void Construct(const FArguments& InArgs);
 private:
 	TSharedPtr<class SSlider> Slider;
-	TArray<TSharedPtr<class SCheckedBox>> CheckedBoxes;
+	TArray<TSharedPtr<class SCheckBox>> CheckBoxes;
 	TSharedPtr<class STextBlock> ComboText;
 };
