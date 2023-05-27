@@ -9,6 +9,7 @@
 #include "Widgets/Text/STextBlock.h"
 #include "ToolMenus.h"
 #include "Widgets/Input/SSlider.h"
+#include "..\Public\SPrefab.h"
 
 static const FName TestEditorStandaloneWindowTabName("TestEditorStandaloneWindow");
 static const FName tab0("tab0");
@@ -77,12 +78,12 @@ void FTestEditorStandaloneWindowModule::StartupModule() {
 	})).SetDisplayName(LOCTEXT("tab0TabTitle","tab1")).SetMenuType(ETabSpawnerMenuType::Enabled);
 
 	// 一个prefab
-	// FGlobalTabmanager::Get()->RegisterNomadTabSpawner(prefab,FOnSpawnTab::CreateLambda([](const FSpawnTabArgs& spawnTabArgs) {
-	// 	return SNew(SDockTab).TabRole(NomadTab)
-	// 	[
-	// 		// SNew()
-	// 	];
-	// }));
+	FGlobalTabmanager::Get()->RegisterNomadTabSpawner(prefab,FOnSpawnTab::CreateLambda([](const FSpawnTabArgs& spawnTabArgs) {
+		return SNew(SDockTab).TabRole(NomadTab)
+		[
+			SNew(SPrefab)
+		];
+	}));
 }
 
 void FTestEditorStandaloneWindowModule::ShutdownModule() {
@@ -128,6 +129,7 @@ void FTestEditorStandaloneWindowModule::PluginButtonClicked() {
 	{
 		FGlobalTabmanager::Get()->TryInvokeTab(tab0);
 		FGlobalTabmanager::Get()->TryInvokeTab(tab1);
+		FGlobalTabmanager::Get()->TryInvokeTab(prefab);
 	}
 }
 
