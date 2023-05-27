@@ -43,7 +43,8 @@ TSharedRef< FSlateStyleSet > FTestEditorToolbarButtonStyle::Create()
 	TSharedRef< FSlateStyleSet > Style = MakeShareable(new FSlateStyleSet("TestEditorToolbarButtonStyle"));
 	Style->SetContentRoot(IPluginManager::Get().FindPlugin("TestEditorToolbarButton")->GetBaseDir() / TEXT("Resources"));
 
-	Style->Set("TestEditorToolbarButton.PluginAction", new IMAGE_BRUSH_SVG(TEXT("PlaceholderButtonIcon"), Icon20x20));
+	FString imgPath = TEXT("20230521215338.jpg");
+	Style->Set("TestEditorToolbarButton.PluginAction", new FSlateImageBrush(RootToContentDir(imgPath), Icon20x20));
 	return Style;
 }
 
