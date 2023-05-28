@@ -1,15 +1,20 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Modules/ModuleManager.h"
+#include "UObject/Object.h"
+#include "IKUNAsset.generated.h"
 
-class FIKUNAssetModule : public IModuleInterface
-{
+/**
+ * 
+ */
+UCLASS()
+class IKUNASSET_API UIKUNAsset : public UObject {
+	GENERATED_BODY()
 public:
-
-	/** IModuleInterface implementation */
-	virtual void StartupModule() override;
-	virtual void ShutdownModule() override;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = IKUNAsset)
+	int32 id;
+	UFUNCTION(BlueprintCallable)
+	int32 getId();
 };

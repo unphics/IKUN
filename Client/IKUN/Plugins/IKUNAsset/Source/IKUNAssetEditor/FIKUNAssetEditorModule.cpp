@@ -2,15 +2,14 @@
 
 #include "Modules/ModuleManager.h"
 #include "AssetToolsModule.h"
-#include "MaterialEditor/Public/MaterialPropertyHelpers.h"
-// #include "IKUNAssetAction.h"
-class FIKUNAssetAction;
+#include "IKUNAssetActions.h"
+
 class FIKUNAssetEditorModule: public IModuleInterface{
 public:
 	TSharedPtr<IAssetTypeActions> action;
 	virtual void StartupModule() override {
 		IAssetTools& assetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-		action  = MakeShareable(new FIKUNAssetAction);
+		action  = MakeShareable(new FIKUNAssetActions);
 		assetTools.RegisterAssetTypeActions(action.ToSharedRef());
 	}
 	virtual void ShutdownModule() override {
