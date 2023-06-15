@@ -1,9 +1,5 @@
 ﻿#include "3DMath/Vector.h"
 
-UE::Math::TVector<float> cross(FVector3f a, FVector3f b);
-float dot1 (FVector3f a, FVector3f b);
-float dot2 (FVector3f a, FVector3f b);
-
 void Vector::func() {
 	FVector3f a = FVector3f(32.0f,66.2f,180.3f);
 	FVector3f b = FVector3f(132.0f,-66.2f,24.3f);
@@ -19,16 +15,17 @@ void Vector::func() {
 	UE_LOG(LogTemp,Warning,TEXT("d1: %f。d2: %f"),d1,d2);
 }
 
-UE::Math::TVector<float> cross(FVector3f a, FVector3f b) {
+UE::Math::TVector<float> Vector::cross(FVector3f a, FVector3f b) {
 	UE::Math::TVector<float> c;
 	c.X = a.Y * b.Z - a.Z * b.Y;
 	c.Y = a.Z * b.X - a.X * b.Z;
 	c.Z = a.X * b.Y - a.Y * b.X;
 	return c;
 }
-float dot1 (FVector3f a, FVector3f b) {
+float Vector::dot1 (FVector3f a, FVector3f b) {
 	return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
 }
+
 // float dot2 (FVector3f a, FVector3f b) {
 // 	return a.Size() * b.Size() * FVector::CosineAngle(a, b);
 // }
