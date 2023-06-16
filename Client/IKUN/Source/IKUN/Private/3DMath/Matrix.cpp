@@ -20,6 +20,9 @@ void Matrix::func() {
 
 	FMatrix m7 = dot(m1, m2);
 	FMatrix m8 = m1 * m2;
+
+	FMatrix m9 = transpose(m1);
+	FMatrix m10 = m1.GetTransposed();
 }
 
 FMatrix Matrix::add(FMatrix a, FMatrix b) {
@@ -81,5 +84,47 @@ FMatrix Matrix::dot(FMatrix a, FMatrix b) {
 	mtx.M[1][3] = a.M[1][0] * b.M[0][3] + a.M[1][1] * b.M[1][3] + a.M[1][2] * b.M[2][3] + a.M[1][3] * b.M[3][3];
 	mtx.M[2][3] = a.M[2][0] * b.M[0][3] + a.M[2][1] * b.M[1][3] + a.M[2][2] * b.M[2][3] + a.M[2][3] * b.M[3][3];
 	mtx.M[3][3] = a.M[3][0] * b.M[0][3] + a.M[3][1] * b.M[1][3] + a.M[3][2] * b.M[2][3] + a.M[3][3] * b.M[3][3];
+	return mtx;
+}
+
+FMatrix Matrix::transpose(FMatrix a) {
+	FMatrix mtx;
+	mtx.M[0][0] = a.M[0][0];
+	mtx.M[1][0] = a.M[0][1];
+	mtx.M[2][0] = a.M[0][2];
+	mtx.M[3][0] = a.M[0][3];
+	mtx.M[0][1] = a.M[1][0];
+	mtx.M[1][1] = a.M[1][1];
+	mtx.M[2][1] = a.M[1][2];
+	mtx.M[3][1] = a.M[1][3];
+	mtx.M[0][2] = a.M[2][0];
+	mtx.M[1][2] = a.M[2][1];
+	mtx.M[2][2] = a.M[2][2];
+	mtx.M[3][2] = a.M[2][3];
+	mtx.M[0][3] = a.M[3][0];
+	mtx.M[1][3] = a.M[3][1];
+	mtx.M[2][3] = a.M[3][2];
+	mtx.M[3][3] = a.M[3][3];
+	return mtx;
+}
+
+FMatrix Matrix::getUnit() {
+	FMatrix mtx;
+	mtx.M[0][0] = 1;
+	mtx.M[1][0] = 0;
+	mtx.M[2][0] = 0;
+	mtx.M[3][0] = 0;
+	mtx.M[0][1] = 0;
+	mtx.M[1][1] = 1;
+	mtx.M[2][1] = 0;
+	mtx.M[3][1] = 0;
+	mtx.M[0][2] = 0;
+	mtx.M[1][2] = 0;
+	mtx.M[2][2] = 1;
+	mtx.M[3][2] = 0;
+	mtx.M[0][3] = 0;
+	mtx.M[1][3] = 0;
+	mtx.M[2][3] = 0;
+	mtx.M[3][3] = 1;
 	return mtx;
 }
