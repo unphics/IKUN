@@ -27,7 +27,8 @@ public class IKUN : ModuleRules
 	        "SQLite",
 	        "GameplayAbilities",
 	        "GameplayTags", 
-	        "GameplayTasks"
+	        "GameplayTasks",
+	        "UMG"
         });
         PublicSystemIncludePaths.Add(Path.Combine(ModuleDirectory, "Public", "Protos"));
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

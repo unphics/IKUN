@@ -20,4 +20,6 @@ public:
 	virtual void BeginDestroy() override;
 	UPROPERTY()
 	USQLiteMgr* sqliteMgr;
+
+private:
 };

@@ -20,7 +20,7 @@ void FTestEditorToolbarButtonModule::StartupModule() {
 	FTestEditorToolbarButtonStyle::Initialize(); // 长得像是决定样式的
 	FTestEditorToolbarButtonStyle::ReloadTextures();
 
-	FTestEditorToolbarButtonCommands::Register(); // 决定安妮命令的 
+	FTestEditorToolbarButtonCommands::Register(); // 决定按钮命令的 
 	
 	PluginCommands = MakeShareable(new FUICommandList);
 
