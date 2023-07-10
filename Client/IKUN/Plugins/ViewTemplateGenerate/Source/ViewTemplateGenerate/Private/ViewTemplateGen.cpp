@@ -25,7 +25,9 @@ void ViewTemplateGen::LoadUMGAssets(FString pathBase, FString pathAdd) {
 		// 处理后得到 D:/UnrealProject/IKUN/Client/IKUN/Content/UI/BP/UMG_Login.uasset
 
 		int32 idxDot = -1;
-		str.FindChar('.', idxDot);
+		// 注意容易出错，我家里的ue这里的FilenameOrDirectory是绝对路径，公司的是相对路径，换引擎时注意调试一遍
+		str.FindLastChar('.', idxDot);
+		// str.find
 		FString st = idxDot > 0 ? str.LeftChop(str.Len() - idxDot) : str;
 #ifdef __VT_GEN_DEBUG_LOG__
 		UE_LOG(LogTemp, Error, TEXT("st: %s"), *st)
@@ -68,7 +70,7 @@ void ViewTemplateGen::ReadUMG(FString refUAsset, FString pathGen, FString nameCl
 	// 使用map方便按条目标记处理
 	TMap<FString,FString> map;
 	map.Add(TEXT("require"),TEXT("require \"UnLua\"\n \n"));
-	map.Add(TEXT("local"), TEXT("loacl " + nameClass + "_C = UnLuaClass('UI.Base.ViewBase')\n"));
+	map.Add(TEXT("local"), TEXT("local " + nameClass + "_C = UnLuaClass('UI.Base.ViewBase')\n"));
 	map.Add(TEXT("mgr"), TEXT("local UIManager = require(\"../UIManager\")\n \n"));
 	map.Add(TEXT("construct"), TEXT("function " + nameClass + "_C: Construct()\n \nend\n \n"));
 	
