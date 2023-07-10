@@ -4,10 +4,9 @@
 #include "Misc/FileHelper.h"
 #include "WidgetParseInclude.h"
 
-#define __VT_GEN_DEBUG_LOG__
-
 void ViewTemplateGen::Gen() {
-	FString pathUMGDir = FPaths::Combine(*FPaths::ProjectContentDir(), TEXT("/UI/BP/"));
+	FString pathUMGDir = FPaths::Combine(*FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir()), TEXT("/UI/BP/"));
+	UE_LOG(LogTemp, Log, TEXT("获取content目录: %s"), *pathUMGDir)
 	ViewTemplateGen::LoadUMGAssets(pathUMGDir, "");
 }
 
@@ -15,10 +14,7 @@ void ViewTemplateGen::LoadUMGAssets(FString pathBase, FString pathAdd) {
 	IPlatformFile& file = FPlatformFileManager::Get().GetPlatformFile();
 	file.IterateDirectory(*(pathBase + pathAdd), [&](const TCHAR* FilenameOrDirectory, bool bIsDirectory) -> bool {
 		// FilenameOrDirectory 大致为 D:/UnrealProject/IKUN/Client/IKUN/Content//UI/BP/UMG_Login.uasset
-#ifdef __VT_GEN_DEBUG_LOG__
 		UE_LOG(LogTemp, Log, TEXT("递归UMG目录: %s"), FilenameOrDirectory)
-#endif
-		
 		TArray<FString> arrStr;
 		FString str = FString(FilenameOrDirectory);
 		str = str.Replace(TEXT("//"), TEXT("/")); // 将所有“//”替换为“/”
@@ -27,36 +23,29 @@ void ViewTemplateGen::LoadUMGAssets(FString pathBase, FString pathAdd) {
 		int32 idxDot = -1;
 		// 注意容易出错，我家里的ue这里的FilenameOrDirectory是绝对路径，公司的是相对路径，换引擎时注意调试一遍
 		str.FindLastChar('.', idxDot);
-		// str.find
 		FString st = idxDot > 0 ? str.LeftChop(str.Len() - idxDot) : str;
-#ifdef __VT_GEN_DEBUG_LOG__
+
 		UE_LOG(LogTemp, Error, TEXT("st: %s"), *st)
-#endif
 		
 		st.ParseIntoArray(arrStr, TEXT("/"), true); // 将字符串按照“/”切分
 		// 分割后 'D:' 'UnrealProject' 'IKUN' 'Client' 'IKUN' 'Content' 'UI' 'BP' 'UMG_Login'
-#ifdef __VT_GEN_DEBUG_LOG__
 		UE_LOG(LogTemp, Log, TEXT("目录处理: %s"), *str)
 		for (FString i : arrStr) {
 			UE_LOG(LogTemp, Error, TEXT("分割: %s"), *i)
 		}
-#endif
 		
 		auto arr = arrStr;
 		auto i = arr[arr.Num() - 1];
 		if (bIsDirectory) {
 			FString path = pathAdd + TEXT("/") + i + TEXT("/");
-#ifdef __VT_GEN_DEBUG_LOG__
 			UE_LOG(LogTemp, Error, TEXT("next: %s"), *path)
-#endif
 			LoadUMGAssets(pathBase.Replace(TEXT("//"), TEXT("/")), path);
 		} else {
 			if (i.StartsWith(TEXT("UMG_"))) { // 检查是否以xxx开头
-				auto h = st.Replace(*FPaths::ProjectContentDir(), TEXT(""));
+				auto h = st.Replace(*FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir()), TEXT(""));
 				auto a = TEXT("WidgetBlueprint'/Game/") + h +TEXT(".") + i + TEXT("_C'"); // "WidgetBlueprint'/Game/UI/BP/UMG_Login.UMG_Login_C'"
-#ifdef __VT_GEN_DEBUG_LOG__
+
 				UE_LOG(LogTemp, Error, TEXT("read file: %s"), *a)
-#endif
 				ViewTemplateGen::ReadUMG(a, h, i);// WidgetBlueprint'/Game/UI/BP/Task/UMG_TaskList.UMG_TaskList'
 			}
 		}
@@ -92,17 +81,16 @@ void ViewTemplateGen::ReadUMG(FString refUAsset, FString pathGen, FString nameCl
 	map.Add(TEXT("return"), TEXT("return " + nameClass + "_C"));
 
 	// 生成目录
-	FString dir = FString(FPaths::ProjectContentDir() + TEXT("LuaScript/") + pathGen + TEXT("_ViewTemplate.lua"));
+	FString dir = FString(FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir()) + TEXT("LuaScript/") + pathGen + TEXT("_ViewTemplate.lua"));
 
 	FString ret;
 	for (TTuple<FString, FString> i : map) {
 		ret.Append(i.Value);
 	}
 	
-#ifdef __VT_GEN_DEBUG_LOG__ // 打印生成内容
+	// 打印生成内容
 	UE_LOG(LogTemp, Warning, TEXT("generate file: \n%s"), *ret)
-#endif
-
+	
 	// 文件生成
 	if (FFileHelper::SaveStringToFile(ret, *dir)) {
 		UE_LOG(LogTemp, Log, TEXT("ViewTemplateGen_Succeed: %s"), *dir)
