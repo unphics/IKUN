@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class ViewTemplateGenerate : ModuleRules
+public class MVVMTemplateGenerate : ModuleRules
 {
-	public ViewTemplateGenerate(ReadOnlyTargetRules Target) : base(Target)
+	public MVVMTemplateGenerate(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		

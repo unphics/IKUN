@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class ViewTemplateGen {
+class MVVMTemplateGen {
 public:
 	static void Gen();
 	static void LoadUMGAssets(FString pathBase, FString pathAdd);

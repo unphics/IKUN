@@ -1,16 +1,16 @@
-﻿#include "ViewTemplateGen.h"
+﻿#include "MVVMTemplateGen.h"
 #include "Blueprint/UserWidget.h"
 #include "Containers/StringConv.h"
 #include "Misc/FileHelper.h"
 #include "WidgetParseInclude.h"
 
-void ViewTemplateGen::Gen() {
+void MVVMTemplateGen::Gen() {
 	FString pathUMGDir = FPaths::Combine(*FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir()), TEXT("/UI/BP/"));
 	UE_LOG(LogTemp, Log, TEXT("获取content目录: %s"), *pathUMGDir)
-	ViewTemplateGen::LoadUMGAssets(pathUMGDir, "");
+	MVVMTemplateGen::LoadUMGAssets(pathUMGDir, "");
 }
 
-void ViewTemplateGen::LoadUMGAssets(FString pathBase, FString pathAdd) {
+void MVVMTemplateGen::LoadUMGAssets(FString pathBase, FString pathAdd) {
 	IPlatformFile& file = FPlatformFileManager::Get().GetPlatformFile();
 	file.IterateDirectory(*(pathBase + pathAdd), [&](const TCHAR* FilenameOrDirectory, bool bIsDirectory) -> bool {
 		// FilenameOrDirectory 大致为 D:/UnrealProject/IKUN/Client/IKUN/Content//UI/BP/UMG_Login.uasset
@@ -46,20 +46,20 @@ void ViewTemplateGen::LoadUMGAssets(FString pathBase, FString pathAdd) {
 				auto a = TEXT("WidgetBlueprint'/Game/") + h +TEXT(".") + i + TEXT("_C'"); // "WidgetBlueprint'/Game/UI/BP/UMG_Login.UMG_Login_C'"
 
 				UE_LOG(LogTemp, Error, TEXT("read file: %s"), *a)
-				ViewTemplateGen::ReadUMG(a, h, i);// WidgetBlueprint'/Game/UI/BP/Task/UMG_TaskList.UMG_TaskList'
+				MVVMTemplateGen::ReadUMG(a, h, i);// WidgetBlueprint'/Game/UI/BP/Task/UMG_TaskList.UMG_TaskList'
 			}
 		}
 		return true;
 	});
 }
 
-void ViewTemplateGen::ReadUMG(FString refUAsset, FString pathGen, FString nameClass) {
+void MVVMTemplateGen::ReadUMG(FString refUAsset, FString pathGen, FString nameClass) {
 	UClass* bp = LoadClass<UUserWidget>(nullptr, *refUAsset);
 
 	// 使用map方便按条目标记处理
 	TMap<FString,FString> map;
 	map.Add(TEXT("require"),TEXT("require \"UnLua\"\n \n"));
-	map.Add(TEXT("local"), TEXT("local " + nameClass + "_C = UnLuaClass('UI.Base.ViewBase')\n"));
+	map.Add(TEXT("local"), TEXT("local " + nameClass + "_C = UnLuaClass('UI.Base.ViewModeBase')\n"));
 	map.Add(TEXT("mgr"), TEXT("local UIManager = require(\"../UIManager\")\n \n"));
 	map.Add(TEXT("construct"), TEXT("function " + nameClass + "_C: Construct()\n \nend\n \n"));
 	
@@ -81,7 +81,7 @@ void ViewTemplateGen::ReadUMG(FString refUAsset, FString pathGen, FString nameCl
 	map.Add(TEXT("return"), TEXT("return " + nameClass + "_C"));
 
 	// 生成目录
-	FString dir = FString(FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir()) + TEXT("LuaScript/") + pathGen + TEXT("_ViewTemplate.lua"));
+	FString dir = FString(FPaths::ConvertRelativePathToFull(FPaths::ProjectContentDir()) + TEXT("LuaScript/") + pathGen + TEXT("_VM.lua"));
 
 	FString ret;
 	for (TTuple<FString, FString> i : map) {
@@ -93,9 +93,9 @@ void ViewTemplateGen::ReadUMG(FString refUAsset, FString pathGen, FString nameCl
 	
 	// 文件生成
 	if (FFileHelper::SaveStringToFile(ret, *dir)) {
-		UE_LOG(LogTemp, Log, TEXT("ViewTemplateGen_Succeed: %s"), *dir)
+		UE_LOG(LogTemp, Log, TEXT("MVVMTemplateGen_Succeed: %s"), *dir)
 	} else {
-		UE_LOG(LogTemp, Warning, TEXT("ViewTemplateGen_Failed: %s"), *dir)
+		UE_LOG(LogTemp, Warning, TEXT("MVVMTemplateGen_Failed: %s"), *dir)
 	}
 }
 

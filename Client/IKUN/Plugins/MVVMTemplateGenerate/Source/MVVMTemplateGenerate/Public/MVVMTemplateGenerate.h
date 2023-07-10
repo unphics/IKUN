@@ -8,7 +8,7 @@
 class FToolBarBuilder;
 class FMenuBuilder;
 
-class FViewTemplateGenerateModule : public IModuleInterface {
+class FMVVMTemplateGenerateModule : public IModuleInterface {
 public:
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
